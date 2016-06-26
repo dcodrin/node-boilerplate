@@ -44,7 +44,7 @@ if(process.env.USE_WEBPACK === 'true'){
 
     app.use(webpackHotMiddleware(compiler));
 
-    console.log(chalk.white.bgRed('Using WebPack Dev Middleware! THIS IS FOR DE ONLY!'));
+    console.log(chalk.white.bgRed('Using WebPack Dev Middleware! THIS IS FOR DEV ONLY!'));
 }
 
 //|-----------------------------------|
