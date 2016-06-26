@@ -2,7 +2,10 @@ import gulp from 'gulp';
 import webpack from 'webpack';
 import chalk from 'chalk';
 import rimraf from 'rimraf';
+//Server
 import {create as createServerConfig} from './webpack.server';
+//Client
+import {create as createClientConfig} from './webpack.client';
 
 //Allows to load all the plugins through $
 const $ = require('gulp-load-plugins')();
@@ -15,21 +18,26 @@ gulp.task('clean:client', cb => rimraf('./public/build', cb));
 gulp.task('clean', gulp.parallel('clean:server', 'clean:client'));
 
 gulp.task('dev:server', gulp.series('clean:server', devServerBuild));
-gulp.task('dev',
-    gulp.series(
-        'clean',
-        devServerBuild,
-    gulp.parallel(
-        devServerWatch,
-        devServerReload
-    )));
-
 gulp.task('prod:server', gulp.series('clean:server', prodServerBuild));
+
+gulp.task('prod:client', gulp.series('clean:client', prodClientBuild));
+
+gulp.task('dev', gulp.series('clean', devServerBuild, gulp.parallel(devServerWatch, devServerReload)));
+gulp.task('prod', gulp.series('clean', gulp.parallel(prodServerBuild, prodClientBuild)));
+
+// ----------------------------------------------------------
+//Private Client Tasks
+
+function prodClientBuild(callback) {
+    const prodClientWebpack = webpack(createClientConfig(false));
+    prodClientWebpack.run((error, stats) => {
+       outputWebpack('Prod:Client', error, stats);
+        callback();
+    });
+}
 
 // ----------------------------------------------------------
 //Private Server Tasks
-
-
 
 //Create webpack dev instance
 const devServerWebpack = webpack(createServerConfig(true));
