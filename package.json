@@ -1,0 +1,30 @@
+{
+  "name": "node-boilerplate",
+  "version": "1.0.0",
+  "description": "A node boilerplate with gulp and webpack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-server": "node_modules/.bin/webpack --config ./webpack.server",
+    "start": "node build/server"
+  },
+  "author": "Codrin Diaconu",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.10.4",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "chalk": "^1.1.3",
+    "eslint": "^2.13.1",
+    "eslint-loader": "^1.3.0",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-load-plugins": "^1.2.4",
+    "gulp-nodemon": "^2.1.0",
+    "gulp-util": "^3.0.7",
+    "rimraf": "^2.5.2",
+    "webpack": "^1.13.1"
+  },
+  "dependencies": {
+    "source-map-support": "^0.4.0"
+  }
+}
