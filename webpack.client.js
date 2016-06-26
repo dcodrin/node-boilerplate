@@ -13,6 +13,7 @@ function createConfig(isDebug) {
     const plugins = [
         new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
     ];
+    const appEntry = ['./src/client/app.js'];
     const cssLoader = {test: /\.css$/, loader: 'style!css'};
     const sassLoader = {test: /\.scss$/, loader: 'style!css!sass'};
 
@@ -24,6 +25,9 @@ function createConfig(isDebug) {
 
         cssLoader.loader = ExtractTextPlugin.extract('style', 'css');
         sassLoader.loader = ExtractTextPlugin.extract('style', 'css!sass');
+    } else {
+        plugins.push(new webpack.HotModuleReplacementPlugin());
+        appEntry.splice(0, 0, 'webpack-hot-middleware/client');
     }
 
     //|--------------------------------------------------------|
@@ -32,7 +36,6 @@ function createConfig(isDebug) {
     const devtool = isDebug ? 'eval-source-map' : 'source-map';
     //|--------------------------------------------------------|
 
-    const appEntry = ['./src/client/app.js'];
 
     // -----------------------
     // WEBPACK CONFIG
